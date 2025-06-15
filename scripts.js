@@ -62,6 +62,7 @@ modeToggle.addEventListener("click", () => {
 
 // fim dark mode
 
+
 //função que checa se todos os inputs foram devidamente preenchidos
 function checkInputs() {
   const loginValue = login.value;
@@ -112,21 +113,23 @@ function checkInputs() {
     setSuccessFor(cpf);
   }
 
-  if (telefoneValue === "") {
-    setErrorFor(telefone, " O telefone é obrigatório");
+ if (telefoneValue === "") {
+    setErrorFor(telefone, "O telefone é obrigatório");
     allInputsAreValid = false;
   } else if (!validarTelefone(telefoneValue)) {
-    setErrorFor(telefone, "O formato deve ser (+55)XX-XXXXXXXX");
+    // Mensagem de erro atualizada para refletir o formato desejado
+    setErrorFor(telefone, "O formato deve ser (XX) XXXX-XXXX");
     allInputsAreValid = false;
   } else {
     setSuccessFor(telefone);
   }
 
   if (celularValue === "") {
-    setErrorFor(celular, " O celular é obrigatório");
+    setErrorFor(celular, "O celular é obrigatório");
     allInputsAreValid = false;
   } else if (!validarCelular(celularValue)) {
-    setErrorFor(celular, "O formato deve ser (+55)XX-XXXXXXXXX");
+    // Mensagem de erro atualizada para refletir o formato desejado
+    setErrorFor(celular, "O formato deve ser (XX) 9XXXX-XXXX"); // Updated error message
     allInputsAreValid = false;
   } else {
     setSuccessFor(celular);
@@ -142,7 +145,7 @@ function checkInputs() {
     setErrorFor(login, "O nome de usuário é obrigatório");
     allInputsAreValid = false;
   } else if (!validarLogin(loginValue)) {
-    setErrorFor(login, "Informe um usuário com 12 letras e nenhum número");
+    setErrorFor(login, "O nome de usuário deve ter entre 3 e 20 caracteres e pode conter letras, números, underscores ou pontos."); // Updated error message
     allInputsAreValid = false;
   } else {
     setSuccessFor(login);
@@ -151,7 +154,6 @@ function checkInputs() {
   if (senhaValue === "") {
     setErrorFor(senha, "A senha é obrigatória");
     allInputsAreValid = false;
-  
   } else {
     setSuccessFor(senha);
   }
@@ -159,7 +161,6 @@ function checkInputs() {
   if (confirmarsenhaValue === "") {
     setErrorFor(confirmarsenha, "A confirmação de senha é obrigatória");
     allInputsAreValid = false;
-  
   } else {
     setSuccessFor(confirmarsenha);
   }
@@ -215,18 +216,20 @@ function validarNome(nomecompleto) {
 }
 
 function validarTelefone(telefone) {
-  const telefoneRegex = /^\(\+55\)\d{2}-\d{8}$/;
+  // Regex para (XX) XXXX-XXXX
+  const telefoneRegex = /^\(\d{2}\) \d{4}-\d{4}$/;
   return telefoneRegex.test(telefone);
 }
 
-
 function validarCelular(celular) {
-  const regex = /^\(\+55\)\d{2}-\d{9}$/; // Expressão regular para validar o formato
-  return regex.test(celular); // Testa se o celular corresponde ao formato esperado
+  // Regex para (XX) 9XXXX-XXXX
+  const regex = /^\(\d{2}\) 9\d{4}-\d{4}$/; // Updated regex for 9XXXX-XXXX
+  return regex.test(celular);
 }
 
 function validarLogin(login) {
-  const regex = /^[a-zA-Z]{12}$/; // expressão regular para validar 6 letras
+  // Regex para validar letras (maiúsculas e minúsculas), números, underscores e pontos, com 3 a 20 caracteres
+  const regex = /^[a-zA-Z0-9._]{3,20}$/;
   if (regex.test(login)) {
     return true; // login válido
   } else {

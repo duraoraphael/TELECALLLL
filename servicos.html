@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Serviços - Telecall</title>
+    <link rel="stylesheet" href="servicos.css" type="text/css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      src="https://kit.fontawesome.com/00a61a6834.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- Barra de Navegação -->
+    <nav>
+      <div class="nav-bar">
+        <i class="bx bx-menu sidebarOpen"></i>
+        <span class="logo navLogo"><a href="./index.html">Telecall</a></span>
+
+        <div class="menu">
+          <div class="logo-toggle">
+            <span class="logo"><a href="./index.html">Telecall</a></span>
+            <i class="bx bx-x siderbarClose"></i>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="./2FA.html">2FA</a></li>
+            <li><a href="./sms.html">SMS Programável</a></li>
+            <li><a href="./servicos.html">Serviços</a></li>
+            <li class="usuario"><a href="login.html">Login</a></li>
+            <li class="deslogar" onclick="deslogar()">Deslogar</li>
+          </ul>
+        </div>
+        <div class="darkLight-searchBox">
+          <div class="dark-light">
+            <i class="bx bx-moon moon"></i>
+            <i class="bx bx-sun sun"></i>
+          </div>
+
+          <div class="searchBox">
+            <div class="searchToggle"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Barra de Navegação -->
+
+    <main>
+      <section class="section-title">
+        <h1>Nossos Planos de Telefonia</h1>
+        <div class="linha"></div>
+      </section>
+
+      <section class="tab-buttons">
+        <button class="tab-button active" data-tab="pf">Pessoa Física</button>
+        <button class="tab-button" data-tab="pj">Empresarial</button>
+      </section>
+
+      <section class="planos-container">
+        <!-- Aba de Planos para Pessoa Física -->
+        <div class="tab-content active" id="pf">
+          <h2>Planos para Pessoa Física</h2>
+          <div class="planos-grid">
+            <div class="plano-card">
+              <h3>Plano Essencial</h3>
+              <p>100 minutos de chamadas para qualquer operadora (fixo e móvel) no Brasil.</p>
+              <p>5 GB de internet 4G/5G.</p>
+              <p>SMS ilimitado para qualquer operadora.</p>
+              <p class="preco">R$ 39,90/mês</p>
+              <button class="btn-contratar" data-plan="essencial">Contratar Plano</button>
+            </div>
+            <div class="plano-card">
+              <h3>Plano Leve</h3>
+              <p>200 minutos de chamadas para qualquer operadora (fixo e móvel) no Brasil.</p>
+              <p>10 GB de internet 4G/5G.</p>
+              <p>SMS ilimitado para qualquer operadora.</p>
+              <p class="preco">R$ 59,90/mês</p>
+              <button class="btn-contratar" data-plan="leve">Contratar Plano</button>
+            </div>
+            <div class="plano-card">
+              <h3>Plano Conecta</h3>
+              <p>500 minutos de chamadas para qualquer operadora (fixo e móvel) no Brasil.</p>
+              <p>20 GB de internet 4G/5G.</p>
+              <p>SMS ilimitado para qualquer operadora.</p>
+              <p class="preco">R$ 89,90/mês</p>
+              <button class="btn-contratar" data-plan="conecta">Contratar Plano</button>
+            </div>
+            <div class="plano-card">
+              <h3>Plano Família</h3>
+              <p>Minutos ilimitados para qualquer operadora (fixo e móvel) no Brasil.</p>
+              <p>50 GB de internet 4G/5G para compartilhar com até 3 dependentes.</p>
+              <p>SMS ilimitado para qualquer operadora.</p>
+              <p class="preco">R$ 129,90/mês</p>
+              <button class="btn-contratar" data-plan="familia">Contratar Plano</button>
+            </div>
+            <div class="plano-card">
+              <h3>Plano Ultra</h3>
+              <p>Minutos ilimitados para qualquer operadora (fixo e móvel) no Brasil.</p>
+              <p>100 GB de internet 4G/5G de alta velocidade.</p>
+              <p>SMS ilimitado para qualquer operadora.</p>
+              <p class="preco">R$ 199,90/mês</p>
+              <button class="btn-contratar" data-plan="ultra">Contratar Plano</button>
+            </div>
+            <div class="plano-card">
+              <h3>Plano Supremo</h3>
+              <p>Minutos e SMS ilimitados para qualquer operadora (fixo e móvel) no Brasil e em viagens internacionais.</p>
+              <p>Internet ilimitada 4G/5G com velocidade máxima.</p>
+              <p>Roaming Internacional (10GB) em diversos países.</p>
+              <p class="preco">R$ 299,90/mês</p>
+              <button class="btn-contratar" data-plan="supremo">Contratar Plano</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba de Planos para Pessoa Jurídica (Empresariais) -->
+        <div class="tab-content" id="pj">
+          <h2>Planos Empresariais</h2>
+          <div class="planos-grid">
+            <div class="plano-card">
+              <h3>Plano Business Básico</h3>
+              <p>Minutos ilimitados (fixo/móvel)</p>
+              <p>20 GB de internet 4G/5G</p>
+              <p>SMS ilimitado</p>
+              <p>Ramais Virtuais (até 5)</p>
+              <p class="preco">R$ 149,90/mês</p>
+              <button class="btn-contratar" data-plan="business_basico">Contratar Plano</button>
+            </div>
+            <div class="plano-card">
+              <h3>Plano Business Intermediário</h3>
+              <p>Minutos ilimitados (fixo/móvel)</p>
+              <p>50 GB de internet 4G/5G</p>
+              <p>SMS ilimitado</p>
+              <p>Ramais Virtuais (até 15)</p>
+              <p>Atendimento prioritário</p>
+              <p class="preco">R$ 299,90/mês</p>
+              <button class="btn-contratar" data-plan="business_intermediario">Contratar Plano</button>
+            </div>
+            <div class="plano-card">
+              <h3>Plano Business Ultra</h3>
+              <p>Minutos ilimitados (fixo/móvel)</p>
+              <p>100 GB de internet 4G/5G</p>
+              <p>SMS ilimitado</p>
+              <p>Ramais Virtuais ilimitados</p>
+              <p>Suporte 24/7 e gerente de contas</p>
+              <p class="preco">R$ 499,90/mês</p>
+              <button class="btn-contratar" data-plan="business_ultra">Contratar Plano</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal de Especificações do Plano -->
+      <div id="modal-plano" class="modal">
+        <div class="modal-content">
+          <span class="close-button">&times;</span>
+          <h2 id="modal-title"></h2>
+          <div id="modal-details"></div>
+          <button id="btn-confirmar-plano">Confirmar Contratação</button>
+        </div>
+      </div>
+
+      <!-- Novo Modal para Mensagens -->
+      <div id="message-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-button" id="close-message-modal">&times;</span>
+          <h2 id="message-modal-title"></h2>
+          <p id="message-modal-text"></p>
+          <button id="message-modal-close-button">OK</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p class="footer-text">
+        Copyright © 2023 | Telecall. Todos os direitos reservados.
+      </p>
+    </footer>
+
+    <script type="text/javascript" src="script(cpaas).js"></script>
+    <script type="text/javascript" src="script(servicos).js"></script>
+  </body>
+</html>
