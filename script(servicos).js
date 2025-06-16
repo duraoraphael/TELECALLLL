@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDetails = document.getElementById('modal-details');
     const btnConfirmarPlano = document.getElementById('btn-confirmar-plano');
 
-    // New message modal elements
+    // New message modal elements (Certifique-se de que esses IDs existem em servicos.html ou serão definidos globalmente por script(cpaas).js)
     const messageModal = document.getElementById('message-modal');
     const closeMessageModalButton = document.getElementById('close-message-modal');
     const messageModalTitle = document.getElementById('message-modal-title');
@@ -195,30 +195,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Function to show the custom message modal
+    // Function to show the custom message modal (se showMessageModal for global, pode ser removida daqui)
+    // Se showMessageModal for definida em script(cpaas).js e você a importa/usa globalmente, remova esta duplicação.
+    // Caso contrário, mantenha-a aqui para funcionalidade independente de servicos.js.
     function showMessageModal(title, message) {
-        messageModalTitle.textContent = title;
-        messageModalText.textContent = message;
-        messageModal.style.display = 'flex';
+        if (messageModal && messageModalTitle && messageModalText) {
+            messageModalTitle.textContent = title;
+            messageModalText.textContent = message;
+            messageModal.style.display = 'flex';
+        } else {
+            console.warn("Elementos do modal de mensagem não encontrados em servicos.js. Usando alert.");
+            alert(message); // Fallback
+        }
     }
 
     // Event listener for the confirm plan button
     btnConfirmarPlano.addEventListener('click', () => {
-        // Here you can add the logic to actually hire the plan
-        // For example, send data to a server, display a success message, etc.
         modalPlano.style.display = 'none'; // Close the plan modal first
         showMessageModal('Sucesso!', 'Plano contratado com sucesso! Em breve entraremos em contato para finalizar os detalhes.');
     });
 
     // Event listener to close the message modal
-    closeMessageModalButton.addEventListener('click', () => {
-        messageModal.style.display = 'none';
-    });
+    if (closeMessageModalButton) { // Verifique se o botão existe antes de adicionar o listener
+        closeMessageModalButton.addEventListener('click', () => {
+            messageModal.style.display = 'none';
+        });
+    }
+
 
     // Event listener for the "OK" button in the message modal
-    messageModalCloseButton.addEventListener('click', () => {
-        messageModal.style.display = 'none';
-    });
+    if (messageModalCloseButton) { // Verifique se o botão existe antes de adicionar o listener
+        messageModalCloseButton.addEventListener('click', () => {
+            messageModal.style.display = 'none';
+        });
+    }
+
 
     // Close the message modal if clicked outside of it
     window.addEventListener('click', (event) => {
@@ -227,30 +238,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Check login to display username in navbar, if applicable
-    // (reuses the function from script(cpaas).js)
-    try {
-        let JsonLogin = JSON.parse(localStorage.getItem("login"));
-        if (JsonLogin && JsonLogin.length > 0 && JsonLogin[0].nomeLogin) {
-            var nomeLogin = JsonLogin[0].nomeLogin;
-            const usuarioElement = document.querySelector(".nav-links .usuario");
-            const deslogarElement = document.querySelector(".nav-links .deslogar");
+    // Esta é a parte da lógica que deve permanecer em servicos.js
+    const selectedPlanDisplay = document.getElementById('selectedPlanDisplay');
+    const selectedPlanDisplayContainer = document.getElementById('selectedPlanDisplayContainer');
 
-            if (nomeLogin.length > 0) {
-                deslogarElement.classList.add("ativo");
-                usuarioElement.textContent = nomeLogin;
-                usuarioElement.querySelector('a').href = '#';
-            }
+    if (selectedPlanDisplay && selectedPlanDisplayContainer) {
+        const storedPlan = localStorage.getItem('selectedPlan');
+        if (storedPlan) {
+            selectedPlanDisplay.value = storedPlan;
+            selectedPlanDisplayContainer.style.display = 'block';
+            localStorage.removeItem('selectedPlan'); // Limpa após exibir
         }
-    } catch (e) {
-        console.error("Erro ao carregar dados de login do localStorage:", e);
     }
 });
-
-// The deslogar() function must be available globally or in script(cpaas).js
-// as per the original design, so that onclick in HTML works.
-// If not in script(cpaas).js, add it here:
-// function deslogar() {
-//     localStorage.removeItem("login"); // Clears login
-//     window.location.href = "login.html";
-// }

@@ -5,10 +5,20 @@ const body = document.querySelector("body"),
   sidebarOpen = document.querySelector(".sidebarOpen"),
   siderbarClose = document.querySelector(".siderbarClose");
 
+// Inicializa o modo de tema ao carregar a página
 let getMode = localStorage.getItem("mode");
-if (getMode && getMode === "dark-mode") {
+if (getMode === "dark-mode") {
   body.classList.add("dark");
+} else if (getMode === "system-mode") {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    body.classList.add("dark");
+  } else {
+    body.classList.remove("dark");
+  }
+} else { // Padrão para modo claro se nenhuma preferência ou modo claro explícito
+  body.classList.remove("dark");
 }
+
 
 //alternar para modo escuro ou claro
 modeToggle.addEventListener("click", () => {
@@ -43,60 +53,136 @@ body.addEventListener("click", (e) => {
   }
 });
 
-// pegando o Login do usuario no localstorage
-
-let JsonLogin = JSON.parse(localStorage.login);
-var nomeLogin = JsonLogin[0].nomeLogin;
-verificarLogin();
-
-function verificarLogin() {
-  if (nomeLogin.length > 5) {
-    const usuario = document.querySelector(".usuario");
-    const Deslogarativo = document.querySelector(".deslogar");
-
-    Deslogarativo.classList.add("ativo");
-    usuario.textContent = nomeLogin;
-  }
+// A função deslogar() deve estar disponível globalmente para que o onclick no HTML funcione.
+function deslogar() {
+  localStorage.removeItem("login"); // Limpa o login do localStorage
+  localStorage.removeItem("profilePic"); // Remove a foto de perfil também
+  localStorage.removeItem("mode"); // Remove a preferência de tema
+  window.location.href = "login.html"; // Redireciona para a página de login
 }
 
-function deslogar() {
-        localStorage.removeItem("login"); // Limpa o login do localStorage
-        window.location.href = "login.html";
-      }
+// Função para exibir mensagens modais (reutilizável)
+function showMessageModal(title, message) {
+    const messageModal = document.getElementById('message-modal');
+    const messageModalTitle = document.getElementById('message-modal-title');
+    const messageModalText = document.getElementById('message-modal-text');
+    const messageModalCloseButton = document.getElementById('message-modal-close-button');
+    const closeMessageModalButton = document.getElementById('close-message-modal');
 
-      // Verifica o estado de login ao carregar a página
-      document.addEventListener("DOMContentLoaded", () => {
-        const usuarioElement = document.querySelector(".nav-links .usuario");
-        const deslogarElement = document.querySelector(".nav-links .deslogar");
-        const cadastrarLinkElement = document.querySelector(".nav-links .cadastrar-link"); // Seleciona o link de cadastrar
+    if (messageModal && messageModalTitle && messageModalText) {
+        messageModalTitle.textContent = title;
+        messageModalText.textContent = message;
+        messageModal.style.display = 'flex';
 
-        if (usuarioElement && deslogarElement && cadastrarLinkElement) { // Garante que todos os elementos existam
-            try {
-                let JsonLogin = JSON.parse(localStorage.getItem("login"));
-                if (JsonLogin && JsonLogin.length > 0 && JsonLogin[0].nomeLogin) {
-                    // Usuário logado: exibe o nome de usuário e o botão de deslogar
-                    usuarioElement.innerHTML = JsonLogin[0].nomeLogin; // Define o texto diretamente
-                    deslogarElement.style.display = "block";
-                    cadastrarLinkElement.style.display = "none"; // Esconde o link de cadastrar
-                } else {
-                    // Nenhum usuário logado: exibe o link de Login e esconde o botão de deslogar
-                    usuarioElement.innerHTML = '<a href="./login.html">Login</a>'; // Garante que o link de login esteja presente
-                    deslogarElement.style.display = "none";
-                    cadastrarLinkElement.style.display = "block"; // Mostra o link de cadastrar
+        // Adiciona event listeners se ainda não estiverem anexados
+        if (!messageModalCloseButton._hasClickListener) {
+            messageModalCloseButton.addEventListener('click', () => {
+                messageModal.style.display = 'none';
+            });
+            messageModalCloseButton._hasClickListener = true;
+        }
+        if (!closeMessageModalButton._hasClickListener) {
+            closeMessageModalButton.addEventListener('click', () => {
+                messageModal.style.display = 'none';
+            });
+            closeMessageModalButton._hasClickListener = true;
+        }
+        if (!window._messageModalGlobalClickListener) {
+            window._messageModalGlobalClickListener = (event) => {
+                if (event.target == messageModal) {
+                    messageModal.style.display = 'none';
                 }
-            } catch (e) {
-                console.error("Erro ao processar estado de login:", e);
-                // Em caso de erro, garante que o link de Login seja exibido e o Cadastrar também
-                usuarioElement.innerHTML = '<a href="./login.html">Login</a>';
-                deslogarElement.style.display = "none";
-                cadastrarLinkElement.style.display = "block";
-            }
+            };
+            window.addEventListener('click', window._messageModalGlobalClickListener);
         }
-        // Verifica se há um plano selecionado no localStorage ao carregar a página
-        const storedPlan = localStorage.getItem('selectedPlan');
-        if (storedPlan) {
-            selectedPlanDisplay.value = storedPlan;
-            selectedPlanDisplayContainer.style.display = 'block';
-            localStorage.removeItem('selectedPlan'); // Limpa após exibir
+    } else {
+        console.warn("Elementos do modal de mensagem não encontrados.");
+        alert(message); // Fallback para alert se os elementos do modal estiverem faltando
+    }
+}
+
+
+// Verifica o estado de login ao carregar a página
+document.addEventListener("DOMContentLoaded", () => {
+  const usuarioElement = document.querySelector(".nav-links .usuario");
+  const deslogarElement = document.querySelector(".nav-links .deslogar");
+  const cadastrarLinkElement = document.querySelector(".nav-links .cadastrar-link");
+
+  console.log("[DEBUG] Estado do Login: Verificando o localStorage...");
+
+  if (usuarioElement && deslogarElement) { // Garante que os elementos essenciais existam
+    try {
+      let JsonLogin = JSON.parse(localStorage.getItem("login"));
+      console.log("[DEBUG] JsonLogin:", JsonLogin);
+
+      if (JsonLogin && JsonLogin.length > 0 && JsonLogin[0].nomeLogin) {
+        console.log("[DEBUG] Usuário Logado. Nome:", JsonLogin[0].nomeLogin);
+        // Usuário logado: exibe o nome de usuário e o botão de deslogar
+        let userLink = usuarioElement.querySelector('a');
+        if (!userLink) { // Se não houver um link <a> dentro, crie um
+            userLink = document.createElement('a');
+            usuarioElement.innerHTML = ''; // Limpa o conteúdo existente
+            usuarioElement.appendChild(userLink);
         }
-      });
+        userLink.href = './usuario.html'; // Caminho correto para usuario.html
+        userLink.textContent = JsonLogin[0].nomeLogin; // Define o nome de usuário como texto do link
+
+        deslogarElement.style.display = "block"; // Exibe o botão de deslogar
+        if (cadastrarLinkElement) { // Esconde o link de cadastrar se ele existir
+          cadastrarLinkElement.style.display = "none";
+        }
+      } else {
+        console.log("[DEBUG] Nenhum usuário logado ou dados incompletos.");
+        // Nenhum usuário logado: exibe o link de Login e esconde o botão de deslogar
+        // Garante que o link de login esteja configurado corretamente
+        let loginLink = usuarioElement.querySelector('a');
+        if (!loginLink) {
+            loginLink = document.createElement('a');
+            usuarioElement.innerHTML = '';
+            usuarioElement.appendChild(loginLink);
+        }
+        loginLink.href = './login.html';
+        loginLink.textContent = 'Login';
+
+        deslogarElement.style.display = "none"; // Esconde o botão de deslogar
+        if (cadastrarLinkElement) { // Mostra o link de cadastrar se ele existir
+          cadastrarLinkElement.style.display = "block";
+        }
+      }
+    } catch (e) {
+      console.error("[DEBUG] Erro ao processar estado de login:", e);
+      // Em caso de erro, garante que o link de Login seja exibido e o Cadastrar também
+      let loginLink = usuarioElement.querySelector('a');
+      if (!loginLink) {
+          loginLink = document.createElement('a');
+          usuarioElement.innerHTML = '';
+          usuarioElement.appendChild(loginLink);
+      }
+      loginLink.href = './login.html';
+      loginLink.textContent = 'Login';
+      deslogarElement.style.display = "none";
+      if (cadastrarLinkElement) {
+        cadastrarLinkElement.style.display = "block";
+      }
+    }
+  } else {
+      console.log("[DEBUG] Elementos 'usuarioElement' ou 'deslogarElement' não encontrados na DOM.");
+  }
+
+
+  // Verifica se há um plano selecionado no localStorage ao carregar a página
+  // Esta parte do código parece ser específica da página de serviços, mas está em cpaas.js.
+  // Se 'selectedPlanDisplay' e 'selectedPlanDisplayContainer' não existirem na página atual,
+  // isso pode causar um erro. É ideal que esta lógica esteja no script específico da página de serviços.
+  const selectedPlanDisplay = document.getElementById('selectedPlanDisplay');
+  const selectedPlanDisplayContainer = document.getElementById('selectedPlanDisplayContainer');
+
+  if (selectedPlanDisplay && selectedPlanDisplayContainer) {
+      const storedPlan = localStorage.getItem('selectedPlan');
+      if (storedPlan) {
+          selectedPlanDisplay.value = storedPlan;
+          selectedPlanDisplayContainer.style.display = 'block';
+          localStorage.removeItem('selectedPlan'); // Limpa após exibir
+      }
+  }
+});

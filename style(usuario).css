@@ -1,0 +1,317 @@
+/* Estilos gerais da página de perfil */
+.perfil-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f7f6;
+    min-height: calc(100vh - 120px); /* Ajuste para o tamanho do cabeçalho e rodapé */
+}
+
+.dark .perfil-main-content {
+    background-color: #333;
+    color: #eee;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-title h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+.dark .section-title h1 {
+    color: #eee;
+}
+
+.linha {
+    width: 80px;
+    height: 4px;
+    background-color: #2fade3;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 30px;
+}
+
+.profile-section {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    flex: 1 1 calc(50% - 30px); /* Duas colunas em telas maiores */
+    min-width: 300px;
+}
+
+.dark .profile-section {
+    background-color: #444;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-section h2 {
+    color: #2fade3;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+/* Seção de Foto de Perfil */
+.profile-picture-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #2fade3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#profile-pic-upload {
+    display: none; /* Esconde o input de arquivo padrão */
+}
+
+.upload-button {
+    background-color: #2fade3;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.upload-button:hover {
+    background-color: #1a9bc3;
+    transform: translateY(-2px);
+}
+
+/* Seção de Tema do Site */
+.theme-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.theme-button {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.dark .theme-button {
+    background-color: #555;
+    border-color: #777;
+    color: #eee;
+}
+
+.theme-button.active {
+    background-color: #2fade3;
+    color: #fff;
+    border-color: #2fade3;
+}
+
+.dark .theme-button.active {
+    background-color: #1a9bc3;
+    border-color: #1a9bc3;
+}
+
+.theme-button:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.dark .theme-button:hover:not(.active) {
+    background-color: #666;
+}
+
+/* Seções de Formulário (Nome de Usuário e Senha) */
+.username-section form,
+.password-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.dark .form-group label {
+    color: #ddd;
+}
+
+.form-group input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+.dark .form-group input {
+    background-color: #666;
+    border-color: #888;
+    color: #eee;
+}
+
+.input-display {
+    background-color: #f0f0f0;
+    color: #666;
+    cursor: default;
+}
+
+.dark .input-display {
+    background-color: #555;
+    color: #bbb;
+}
+
+.save-button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.save-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .profile-section {
+        flex: 1 1 100%; /* Uma coluna em telas menores */
+    }
+
+    .theme-options {
+        flex-direction: column;
+    }
+    .theme-button {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+/* Estilo para o modal de mensagem (seção de serviços) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+.dark .modal-content {
+    background-color: #555;
+    color: #eee;
+}
+
+.modal-content h2 {
+    color: #2fade3;
+    margin-bottom: 15px;
+}
+
+.dark .modal-content h2 {
+    color: #1a9bc3;
+}
+
+.modal-content p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dark .close-button {
+    color: #bbb;
+}
+
+.dark .close-button:hover,
+.dark .close-button:focus {
+    color: #fff;
+}
+
+#message-modal-close-button {
+    background-color: #2fade3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#message-modal-close-button:hover {
+    background-color: #1a9bc3;
+}

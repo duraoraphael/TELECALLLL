@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil do Usuário - Telecall</title>
+    <link rel="stylesheet" href="style(cpaas).css" type="text/css" />
+    <link rel="stylesheet" href="style(usuario).css" type="text/css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      src="https://kit.fontawesome.com/00a61a6834.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- Barra de Navegação (reutiliza a estrutura das outras páginas) -->
+    <nav>
+      <div class="nav-bar">
+        <i class="bx bx-menu sidebarOpen"></i>
+        <span class="logo navLogo"><a href="./index.html">Telecall</a></span>
+
+        <div class="menu">
+          <div class="logo-toggle">
+            <span class="logo"><a href="./index.html">Telecall</a></span>
+            <i class="bx bx-x siderbarClose"></i>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="./2FA.html">2FA</a></li>
+            <li><a href="./sms.html">SMS Programável</a></li>
+            <li><a href="./servicos.html">Serviços</a></li>
+            <li class="cadastrar-link"><a href="./cadastro.html">Cadastrar</a></li>
+            <li class="usuario"><a href="./login.html">Login</a></li>
+            <li class="deslogar" onclick="deslogar()">Deslogar</li>
+          </ul>
+        </div>
+        <div class="darkLight-searchBox">
+          <div class="dark-light">
+            <i class="bx bx-moon moon"></i>
+            <i class="bx bx-sun sun"></i>
+          </div>
+
+          <div class="searchBox">
+            <div class="searchToggle"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Fim da Barra de Navegação -->
+
+    <main class="perfil-main-content">
+      <section class="section-title">
+        <h1>Meu Perfil</h1>
+        <div class="linha"></div>
+      </section>
+
+      <div class="profile-container">
+        <!-- Seção de Foto de Perfil -->
+        <div class="profile-section profile-picture-section">
+          <h2>Foto de Perfil</h2>
+          <div class="profile-picture-area">
+            <img id="profile-pic" src="https://placehold.co/150x150/EEEEEE/333333?text=Sua+Foto" alt="Foto de Perfil" />
+            <input type="file" id="profile-pic-upload" accept="image/*" />
+            <label for="profile-pic-upload" class="upload-button">Alterar Foto</label>
+          </div>
+        </div>
+
+        <!-- Seção de Tema do Site -->
+        <div class="profile-section theme-section">
+          <h2>Tema do Site</h2>
+          <div class="theme-options">
+            <button id="theme-light" class="theme-button">Claro</button>
+            <button id="theme-dark" class="theme-button">Escuro</button>
+            <button id="theme-system" class="theme-button">Sistema</button>
+          </div>
+        </div>
+
+        <!-- Seção de Alterar Nome de Usuário -->
+        <div class="profile-section username-section">
+          <h2>Alterar Nome de Usuário</h2>
+          <form id="change-username-form">
+            <div class="form-group">
+              <label for="current-username">Nome de Usuário Atual:</label>
+              <input type="text" id="current-username" class="input-display" readonly />
+            </div>
+            <div class="form-group">
+              <label for="new-username">Novo Nome de Usuário:</label>
+              <input type="text" id="new-username" placeholder="Digite o novo nome de usuário" />
+            </div>
+            <button type="submit" class="save-button">Salvar Nome de Usuário</button>
+          </form>
+        </div>
+
+        <!-- Seção de Alterar Senha -->
+        <div class="profile-section password-section">
+          <h2>Alterar Senha</h2>
+          <form id="change-password-form">
+            <div class="form-group">
+              <label for="old-password">Senha Antiga:</label>
+              <input type="password" id="old-password" placeholder="Digite sua senha antiga" />
+            </div>
+            <div class="form-group">
+              <label for="new-password">Nova Senha:</label>
+              <input type="password" id="new-password" placeholder="Digite sua nova senha" />
+            </div>
+            <div class="form-group">
+              <label for="confirm-new-password">Confirme a Nova Senha:</label>
+              <input type="password" id="confirm-new-password" placeholder="Confirme sua nova senha" />
+            </div>
+            <button type="submit" class="save-button">Salvar Senha</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal para Mensagens (reutiliza do script(cpaas).js) -->
+      <div id="message-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-button" id="close-message-modal">&times;</span>
+          <h2 id="message-modal-title"></h2>
+          <p id="message-modal-text"></p>
+          <button id="message-modal-close-button">OK</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p class="footer-text">
+        Copyright © 2023 | Telecall. Todos os direitos reservados.
+      </p>
+    </footer>
+    <script type="text/javascript" src="script(cpaas).js"></script>
+    <script type="text/javascript" src="scripts.js"></script> <!-- Para validações (opcional se não precisar) -->
+    <script type="text/javascript" src="script(usuario).js"></script>
+  </body>
+</html>
